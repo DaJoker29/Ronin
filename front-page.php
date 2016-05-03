@@ -43,6 +43,11 @@ get_header(); ?>
         <!-- /.container-fluid -->
     </nav>
 
+    <!-- Content Goes Here -->
+    <?php while ( have_posts() ) : the_post(); ?>
+        <?php the_content(); ?>
+    <?php endwhile; ?>
+    <!-- Content Ends Here -->
     <?php get_footer(); ?>
 
     <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
