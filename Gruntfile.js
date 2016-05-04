@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+    require('load-grunt-tasks')(grunt);
 
     // Project configuration.
     grunt.initConfig({
@@ -9,22 +10,45 @@ module.exports = function(grunt) {
                 dest: 'js/<%= pkg.name %>.min.js'
             }
         },
-        less: {
-            expanded: {
+        // less: {
+        //     expanded: {
+        //         options: {
+        //             paths: ["css"]
+        //         },
+        //         files: {
+        //             "css/<%= pkg.name %>.css": "less/<%= pkg.name %>.less"
+        //         }
+        //     },
+        //     minified: {
+        //         options: {
+        //             paths: ["css"],
+        //             cleancss: true
+        //         },
+        //         files: {
+        //             "css/<%= pkg.name %>.min.css": "less/<%= pkg.name %>.less"
+        //         }
+        //     }
+        // },
+        sass: {
+            full: {
+                expand: true,
+                cwd: 'sass',
+                src: ['**/*.scss'],
+                dest: 'css',
+                ext: '.css',
                 options: {
-                    paths: ["css"]
-                },
-                files: {
-                    "css/<%= pkg.name %>.css": "less/<%= pkg.name %>.less"
+                    style: 'expanded',
+                    sourcemap: 'none'
                 }
             },
             minified: {
+                expand: true,
+                cwd: 'sass',
+                src: ['**/*.scss'],
+                dest: 'css',
+                ext: '.min.css',
                 options: {
-                    paths: ["css"],
-                    cleancss: true
-                },
-                files: {
-                    "css/<%= pkg.name %>.min.css": "less/<%= pkg.name %>.less"
+                    style: 'compressed'
                 }
             }
         },
@@ -52,9 +76,9 @@ module.exports = function(grunt) {
                     spawn: false,
                 },
             },
-            less: {
-                files: ['less/*.less'],
-                tasks: ['less'],
+            sass: {
+                files: ['sass/**/*.scss'],
+                tasks: ['sass'],
                 options: {
                     spawn: false,
                 }
@@ -68,13 +92,7 @@ module.exports = function(grunt) {
         },
     });
 
-    // Load the plugins.
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-less');
-    grunt.loadNpmTasks('grunt-banner');
-    grunt.loadNpmTasks('grunt-contrib-watch');
-
     // Register Tasks
-    grunt.registerTask('build', ['uglify', 'less', 'usebanner']);
+    grunt.registerTask('build', ['uglify', 'sass', 'usebanner']);
     grunt.registerTask('default', ['build', 'watch']);
 };
