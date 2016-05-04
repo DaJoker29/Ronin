@@ -74,13 +74,15 @@ module.exports = function(grunt) {
                 tasks: ['uglify'],
                 options: {
                     spawn: false,
+                    livereload: true
                 },
             },
             sass: {
                 files: ['sass/**/*.scss'],
-                tasks: ['sass'],
+                tasks: ['sass', 'postcss'],
                 options: {
                     spawn: false,
+                    livereload: true
                 }
             },
             grunt: {
@@ -90,9 +92,23 @@ module.exports = function(grunt) {
                 }
             }
         },
+        postcss: {
+            options: {
+                processors: [
+                    require('autoprefixer')({browsers: ['last 2 version']})
+                ]
+            },
+            full: {
+                src: 'css/ronin.css'
+            },
+            minified: {
+                src: 'css/ronin.min.css',
+                map: true
+            }
+        }
     });
 
     // Register Tasks
-    grunt.registerTask('build', ['uglify', 'sass', 'usebanner']);
+    grunt.registerTask('build', ['uglify', 'sass', 'postcss', 'usebanner']);
     grunt.registerTask('default', ['build', 'watch']);
 };
