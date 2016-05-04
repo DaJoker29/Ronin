@@ -59,6 +59,12 @@ module.exports = function(grunt) {
                     spawn: false,
                 }
             },
+            grunt: {
+                files: ['./Gruntfile.js', 'config/*.js'],
+                options: {
+                    reload: true
+                }
+            }
         },
     });
 
