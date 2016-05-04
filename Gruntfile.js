@@ -30,8 +30,8 @@ module.exports = function(grunt) {
         },
         banner: '/*!\n' +
             ' * <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n' +
-            ' * Copyright 2013-<%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
-            ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n' +
+            ' * Copyright <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
+            ' * Licensed under <%= pkg.license %>\n' +
             ' */\n',
         usebanner: {
             dist: {
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-banner');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    // Default task(s).
-    grunt.registerTask('default', ['uglify', 'less', 'usebanner']);
-
+    // Register Tasks
+    grunt.registerTask('build', ['uglify', 'less', 'usebanner']);
+    grunt.registerTask('default', ['build', 'watch']);
 };
